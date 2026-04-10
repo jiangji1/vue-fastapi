@@ -5,22 +5,29 @@
 - `backend/`: FastAPI（账号密码登录 + JWT）、SQLAlchemy 2、Alembic、MySQL
 - `frontend/`: Vue3 + TypeScript + Element Plus 管理后台骨架
 
-## 本地启动（Docker Compose）
+## 本地启动（不使用 Docker / MySQL）
 
-在 `c:\pycode\f1` 下执行：
+后端默认使用 SQLite（本地文件 `backend/.data/app.db`）。
+
+后端启动：
 
 ```bash
-docker compose up --build
+cd backend
+.\.v\Scripts\activate
+uvicorn app.main:app --reload
 ```
 
-然后：
+前端启动：
 
-- 后端 API：`http://localhost:8000`
-- 接口文档：`http://localhost:8000/docs`
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
 ## 后端环境变量
 
-Compose 已内置默认值。若你要本地裸跑后端，可参考 `backend/.env.example`。
+当前后端默认使用 SQLite（本地文件数据库），无需 Docker/MySQL。若你要本地裸跑后端，可参考 `backend/.env.example`。
 
 ## 初始账号
 

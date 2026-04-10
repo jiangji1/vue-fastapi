@@ -1,9 +1,16 @@
 from __future__ import annotations
 
+import os
+import sys
 from logging.config import fileConfig
 
 from alembic import context
 from sqlalchemy import engine_from_config, pool
+
+# 允许从任意工作目录运行 `alembic`：把 backend 根目录加入 sys.path，确保能 import app.*
+BACKEND_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if BACKEND_ROOT not in sys.path:
+    sys.path.insert(0, BACKEND_ROOT)
 
 from app.core.config import settings
 from app.db.base import Base

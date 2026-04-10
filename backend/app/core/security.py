@@ -9,7 +9,8 @@ from passlib.context import CryptContext
 from app.core.config import settings
 
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+# 避免 bcrypt 在不同平台/版本上的二进制兼容问题，默认用纯实现的 PBKDF2。
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 
 def hash_password(password: str) -> str:

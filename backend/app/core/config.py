@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+from pathlib import Path
+
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -10,6 +12,12 @@ class Settings(BaseSettings):
 
     app_name: str = "f1-api"
     env: str = "dev"
+
+    # 数据库：
+    # - sqlite（默认）：本地文件数据库，无需安装 MySQL
+    # - mysql：若你未来需要再切回 MySQL，可配置 mysql 相关环境变量
+    db_scheme: str = "sqlite"  # sqlite | mysql
+    sqlite_path: str = "./.data/app.db"
 
     db_host: str = "localhost"
     db_port: int = 3306
@@ -26,11 +34,15 @@ class Settings(BaseSettings):
 
     @property
     def sqlalchemy_database_uri(self) -> str:
-        # PyMySQL 使用 mysql+pymysql
-        return (
-            f"mysql+pymysql://{self.db_user}:{self.db_password}"
-            f"@{self.db_host}:{self.db_port}/{self.db_name}?charset=utf8mb4"
-        )
+        if self.db_scheme.lower() == "sqlite":
+            p = Path(self.sqlite_path)
+            if not p.is_absolute():
+                p = Path.cwd() / p
+            p.parent.mkdir(parents=True, exist_ok=True)
+            return f"sqlite:///{p.as_posix()}"
+
+        # mysql+pymysql
+        return f"mysql+pymysql://{self.db_user}:{self.db_password}@{self.db_host}:{self.db_port}/{self.db_name}?charset=utf8mb4"
 
 
 settings = Settings()
