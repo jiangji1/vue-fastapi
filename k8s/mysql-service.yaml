@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: f1-mysql
+  namespace: f1
+spec:
+  selector:
+    app: f1-mysql
+  ports:
+    - name: mysql
+      port: 3306
+      targetPort: 3306
+

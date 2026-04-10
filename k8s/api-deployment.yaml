@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: f1-api
+  namespace: f1
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: f1-api
+  template:
+    metadata:
+      labels:
+        app: f1-api
+    spec:
+      containers:
+        - name: api
+          image: your-registry/f1-api:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          envFrom:
+            - configMapRef:
+                name: f1-api-config
+            - secretRef:
+                name: f1-api-secret
+          readinessProbe:
+            httpGet:
+              path: /docs
+              port: 8000
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /docs
+              port: 8000
+            initialDelaySeconds: 15
+            periodSeconds: 20
+

@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: f1-api-config
+  namespace: f1
+data:
+  APP_NAME: "f1-api"
+  ENV: "prod"
+
+  DB_HOST: "f1-mysql"
+  DB_PORT: "3306"
+  DB_USER: "f1"
+  DB_NAME: "f1"
+
+  JWT_ALGORITHM: "HS256"
+  JWT_ACCESS_TOKEN_EXPIRE_MINUTES: "60"
+
+  BOOTSTRAP_ADMIN_USERNAME: "admin"
+
