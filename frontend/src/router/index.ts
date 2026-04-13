@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import { useAuthStore } from '../stores/auth'
-import HomeView from '../views/HomeView.vue'
-import LoginView from '../views/LoginView.vue'
+
+// 路由懒加载 - 只在需要时才加载对应的组件
+const LoginView = () => import('../views/LoginView.vue')
+const HomeView = () => import('../views/HomeView.vue')
 
 export const router = createRouter({
   history: createWebHistory(),

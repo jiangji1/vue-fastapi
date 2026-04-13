@@ -1,6 +1,5 @@
 import { createApp } from 'vue'
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
+// Element Plus 已改为按需导入，无需在此引入
 
 import App from './App.vue'
 import { router } from './router'
@@ -8,4 +7,4 @@ import { pinia } from './stores'
 
 import './style.css'
 
-createApp(App).use(pinia).use(router).use(ElementPlus).mount('#app')
+createApp(App).use(pinia).use(router).mount('#app')
